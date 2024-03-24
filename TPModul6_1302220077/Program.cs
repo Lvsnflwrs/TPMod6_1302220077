@@ -22,12 +22,17 @@ public class SayaTubeVideo
 
     public void IncreasePlayCount(int count)
     {
-        
-        if (count > 0 && playCount > int.MaxValue - count)
+        try
         {
-            throw new OverflowException("Penambahan play count melebihi batas maksimum.");
+            checked
+            {
+                playCount += count;
+            }
         }
-        playCount += count;
+        catch (OverflowException ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 
     public void PrintVideoDetails()
@@ -68,7 +73,7 @@ class Program
         {
             try
             {
-                video2.IncreasePlayCount(2000000000);
+                video2.IncreasePlayCount(200000000);
             }
             catch (OverflowException ex)
             {
